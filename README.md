@@ -10,6 +10,40 @@ To decrypt the message, each block is multiplied by the inverse of the matrix us
 The matrix used for encryption is the cipher key, and it should be chosen randomly from the set of invertible n × n matrices (modulo 26).
 The cipher can, be adapted to an alphabet with any number of letters.
 All arithmetic just needs to be done modulo the number of letters instead of modulo.
+# Program 
+```
+def encrypt(message, key):
+
+    message = message.upper()
+
+    # Add X if message length is odd
+    if len(message) % 2 != 0:
+        message += 'X'
+
+    result = ""
+
+    for i in range(0, len(message), 2):
+
+        a = ord(message[i]) - ord('A')
+        b = ord(message[i + 1]) - ord('A')
+
+        c1 = (key[0][0] * a + key[0][1] * b) % 26
+        c2 = (key[1][0] * a + key[1][1] * b) % 26
+
+        result += chr(c1 + ord('A'))
+        result += chr(c2 + ord('A'))
+
+    return result
+
+
+# Key matrix
+key = [[3, 3],
+       [2, 5]]
+
+message = input("Enter message: ")
+
+print("Encrypted message:", encrypt(message, key))
+```
 # Output
 <img width="1362" height="612" alt="Screenshot 2026-10-26 103943" src="https://github.com/user-attachments/assets/76a7d7bf-aa64-4249-b3d5-590c401198f0" />
 
